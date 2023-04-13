@@ -1,6 +1,8 @@
-connliu.azurewebsites.net {
+{$WEBSITE_HOSTNAME:connliu.azurewebsites.net} {
     log {
-        output file /etc/caddy/caddy.log
+        level INFO
+        output file /var/log/caddy.log
+        format console
     }
     tls {
         protocols tls1.2 tls1.3
