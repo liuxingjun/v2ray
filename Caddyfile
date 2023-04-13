@@ -1,4 +1,4 @@
-openai-connliu.azurewebsites.net {
+connliu.azurewebsites.net {
     log {
         output file /etc/caddy/caddy.log
     }
@@ -8,7 +8,7 @@ openai-connliu.azurewebsites.net {
         curves x25519
     }
     @v2ray_websocket {
-        path /ray
+        path /connliu
         header Connection Upgrade
         header Upgrade websocket
     }
