@@ -25,4 +25,4 @@ services:
     network_mode: "host"
     volumes:
       - "./Caddyfile:/etc/caddy/Caddyfile:ro"
-      - ".caddy:/root/.caddy"
+      - ".caddy:/data/caddy"
