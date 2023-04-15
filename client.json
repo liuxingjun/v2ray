@@ -19,6 +19,7 @@
     ],
     "outbounds": [
         {
+            "tag": "proxy",
             "protocol": "vmess",
             "settings": {
                 "vnext": [
@@ -36,9 +37,14 @@
             },
             "streamSettings": {
                 "network": "ws",
-                "security": "tls",
                 "wsSettings": {
+                    "connectionReuse": true,
                     "path": "/connliu"
+                },
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": true,
+                    "serverName": "mydomain.me"
                 }
             }
         }
