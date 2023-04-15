@@ -4,28 +4,43 @@ ENV TZ=Asia/Shanghai
 
 # v2ray
 COPY config.json /etc/v2ray/
+RUN rm /var/log/v2ray/*
 
 # entrypoint
 RUN echo -e '#!/bin/sh\nset -e' >> /root/entrypoint.sh \
     && chmod +x /root/entrypoint.sh
 
 # caddy
-# COPY Caddyfile /etc/caddy/Caddyfile
-# RUN apk add caddy
-# RUN echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh
+COPY Caddyfile /etc/caddy/Caddyfile
+RUN apk add caddy
+ARG caddy
+RUN if [ -n "$caddy" ]; then \
+    echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh
+    fi
+# RUN 
+
+
 
 # nginx
 RUN apk add nginx
 COPY default.conf /etc/nginx/http.d/
-RUN echo 'nginx -g "daemon off;"' >> /root/entrypoint.sh
+ARG nginx
+RUN if [ -n "$nginx" ]; then \
+    echo 'nginx -g "daemon off;"' >> /root/entrypoint.sh
+    fi
 
-# azure Start and enable SSH
+# ssh
 COPY sshd_config /etc/ssh/
 RUN apk add openssh \
-    && echo "root:Docker!" | chpasswd \
     && cd /etc/ssh/ \
     && ssh-keygen -A \
     && echo '/usr/sbin/sshd' >> /root/entrypoint.sh
+
+# azure Start and enable SSH
+ARG azure_ssh
+RUN if [ -n "$azure_ssh" ]; then \
+    echo "root:Docker!" | chpasswd 
+    fi
 
 RUN apk add curl
 
