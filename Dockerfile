@@ -3,7 +3,7 @@ FROM v2fly/v2fly-core
 ENV TZ=Asia/Shanghai
 
 # v2ray
-COPY config.json /etc/v2ray/
+COPY v2ray /etc/v2ray
 RUN rm /var/log/v2ray/*
 
 # entrypoint
