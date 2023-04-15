@@ -2,8 +2,14 @@
 
 ## run 
 ```
-docker run -d -e WEBSITE_HOSTNAME=mydomain.com --name v2ray liuxingjun/v2ray
+docker run -d --name v2ray liuxingjun/v2ray
 ```
+### caddy
+
+```
+docker run -d -e CADDY_DEBUG=debug -e WEBSITE_HOSTNAME=mydomain.com -v ~/.caddy:/data/caddy --name v2ray liuxingjun/v2ray:caddy
+```
+
 ## test 
 ```
 curl --socks5 127.0.0.1:1080 -I https://www.google.com
