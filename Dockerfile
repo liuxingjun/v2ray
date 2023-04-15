@@ -13,9 +13,9 @@ RUN echo -e '#!/bin/sh\nset -e' >> /root/entrypoint.sh \
 # caddy
 COPY Caddyfile /etc/caddy/Caddyfile
 RUN apk add caddy
-ARG caddy
-RUN if [ -n "$caddy" ]; then \
-    echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh
+ARG caddy=false
+RUN if [ "$caddy" = true ]; then \
+    echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh; \
     fi
 # RUN 
 
@@ -24,12 +24,13 @@ RUN if [ -n "$caddy" ]; then \
 # nginx
 RUN apk add nginx
 COPY default.conf /etc/nginx/http.d/
-ARG nginx
-RUN if [ -n "$nginx" ]; then \
-    echo 'nginx -g "daemon off;"' >> /root/entrypoint.sh
+ARG nginx=false
+RUN if [ "$nginx" = true ]; then \
+    echo 'nginx -g "daemon off;"' >> /root/entrypoint.sh; \
     fi
 
 # ssh
+ARG ssh=true
 COPY sshd_config /etc/ssh/
 RUN apk add openssh \
     && cd /etc/ssh/ \
@@ -37,9 +38,9 @@ RUN apk add openssh \
     && echo '/usr/sbin/sshd' >> /root/entrypoint.sh
 
 # azure Start and enable SSH
-ARG azure_ssh
-RUN if [ -n "$azure_ssh" ]; then \
-    echo "root:Docker!" | chpasswd 
+ARG ssh_azure=false
+RUN if [ "$azure_ssh" = true ]; then \
+    echo "root:Docker!" | chpasswd; \
     fi
 
 RUN apk add curl
