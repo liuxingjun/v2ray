@@ -24,8 +24,8 @@
             "settings": {
                 "vnext": [
                     {
-                        "address": "127.0.0.1",
-                        "port": 80,
+                        "address": "mydomain.me",
+                        "port": 443,
                         "users": [
                             {
                                 "id": "b831381d-6324-4d53-ad4f-8cda48b30811",
@@ -40,6 +40,11 @@
                 "wsSettings": {
                     "connectionReuse": true,
                     "path": "/connliu"
+                },
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": true,
+                    "serverName": "mydomain.me"
                 }
             }
         }
