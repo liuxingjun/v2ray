@@ -2,16 +2,11 @@
 	{$CADDY_DEBUG}
 }
 
-{$WEBSITE_HOSTNAME:connliu.azurewebsites.net}:443 {
+{$WEBSITE_HOSTNAME:connliu.azurewebsites.net} {
     log {
         level INFO
         output file /var/log/caddy.log
         format console
-    }
-    tls {
-        protocols tls1.2 tls1.3
-        ciphers TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
-        curves x25519
     }
     @v2ray_websocket {
         path /connliu
