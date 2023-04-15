@@ -2,6 +2,8 @@ FROM v2fly/v2fly-core
 
 ENV TZ=Asia/Shanghai
 
+RUN apk add curl gettext
+
 # v2ray
 COPY v2ray /etc/v2ray
 RUN rm /var/log/v2ray/*
@@ -43,7 +45,7 @@ RUN if [ "$azure_ssh" = true ]; then \
     echo "root:Docker!" | chpasswd; \
     fi
 
-RUN apk add curl
+
 
 EXPOSE 80 443 2222
 
