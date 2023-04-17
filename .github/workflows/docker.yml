@@ -27,3 +27,9 @@ jobs:
         with:
           push: true
           tags: liuxingjun/v2ray:latest
+        - name: Build and push azure
+        uses: docker/build-push-action@v4
+        with:
+          build-args: ["nginx=true","ssh_azure=true"]
+          push: true
+          tags: liuxingjun/v2ray:azure
