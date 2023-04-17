@@ -19,9 +19,6 @@ ARG caddy=false
 RUN if [ "$caddy" = true ]; then \
     echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh; \
     fi
-# RUN 
-
-
 
 # nginx
 RUN apk add nginx
@@ -44,8 +41,6 @@ ARG ssh_azure=false
 RUN if [ "$azure_ssh" = true ]; then \
     echo "root:Docker!" | chpasswd; \
     fi
-
-
 
 EXPOSE 80 443 2222
 
