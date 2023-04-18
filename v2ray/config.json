@@ -20,8 +20,10 @@
             "streamSettings": {
                 "network": "ws",
                 "wsSettings": {
+                    "connectionReuse": true,
                     "path": "/connliu"
-                }
+                },
+                "security": "auto"
             }
         }
     ],
