@@ -20,4 +20,4 @@ caddy:
 	docker build --build-arg caddy=true -t liuxingjun/v2ray:caddy .
 
 nginx:
-	docker build --build-arg caddy=true -t liuxingjun/v2ray:nginx .
+	docker build --build-arg nginx=true -t liuxingjun/v2ray:nginx .
