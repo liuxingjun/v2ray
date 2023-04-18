@@ -38,7 +38,7 @@ RUN apk add openssh \
 
 # azure Start and enable SSH
 ARG ssh_azure=false
-RUN if [ "$azure_ssh" = true ]; then \
+RUN if [ "$ssh_azure" = true ]; then \
     echo "root:Docker!" | chpasswd; \
     fi
 
