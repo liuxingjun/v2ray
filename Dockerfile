@@ -29,13 +29,15 @@ RUN if [ "$nginx" = true ]; then \
     fi
 
 # ssh
-ARG ssh=true
 COPY sshd_config /etc/ssh/
 RUN apk add openssh \
     && cd /etc/ssh/ \
-    && ssh-keygen -A \
-    && echo '/usr/sbin/sshd' >> /root/entrypoint.sh
+    && ssh-keygen -A
 
+ARG ssh=false
+RUN if [ "$ssh" = true ]; then \
+    echo '/usr/sbin/sshd' >> /root/entrypoint.sh \
+    fi
 # azure Start and enable SSH
 ARG ssh_azure=false
 RUN if [ "$ssh_azure" = true ]; then \
