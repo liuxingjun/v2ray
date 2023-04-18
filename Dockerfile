@@ -25,7 +25,7 @@ RUN apk add nginx
 COPY default.conf /etc/nginx/http.d/
 ARG nginx=false
 RUN if [ "$nginx" = true ]; then \
-    echo 'nginx -g "daemon off;"' >> /root/entrypoint.sh; \
+    echo 'nginx -g "daemon on;"' >> /root/entrypoint.sh; \
     fi
 
 # ssh
