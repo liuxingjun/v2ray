@@ -1,50 +1,31 @@
-FROM v2fly/v2fly-core
-
+FROM v2fly/v2fly-core as v2ray
 ENV TZ=Asia/Shanghai
-
-RUN apk add curl gettext
-
-# v2ray
 COPY v2ray /etc/v2ray
 RUN rm /var/log/v2ray/*
+COPY --chmod=+x entrypoint.sh entrypoint.sh
+EXPOSE 10000
+ENTRYPOINT [ "/root/entrypoint.sh" ]
 
-# entrypoint
-RUN echo -e '#!/bin/sh\nset -e' >> /root/entrypoint.sh \
-    && chmod +x /root/entrypoint.sh
-
-# caddy
-COPY Caddyfile /etc/caddy/Caddyfile
-RUN apk add caddy
-ARG caddy=false
-RUN if [ "$caddy" = true ]; then \
-    echo 'caddy start --config /etc/caddy/Caddyfile' >> /root/entrypoint.sh; \
-    fi
-
-# nginx
+FROM v2ray as nginx
 RUN apk add nginx
 COPY default.conf /etc/nginx/http.d/
-ARG nginx=false
-RUN if [ "$nginx" = true ]; then \
-    echo 'nginx -g "daemon on;"' >> /root/entrypoint.sh; \
-    fi
+RUN sed -i '$i\nginx -g "daemon on;"' /root/entrypoint.sh
 
+EXPOSE 80
+
+FROM v2ray as caddy
+COPY Caddyfile /etc/caddy/Caddyfile
+RUN apk add caddy
+COPY default.conf /etc/nginx/http.d/
+RUN sed -i '$i\caddy start --config /etc/caddy/Caddyfile' /root/entrypoint.sh
+EXPOSE 80 443
+
+FROM nginx as azure
 # ssh
 COPY sshd_config /etc/ssh/
 RUN apk add openssh \
     && cd /etc/ssh/ \
-    && ssh-keygen -A
-
-ARG ssh=false
-RUN if [ "$ssh" = true ]; then \
-    echo '/usr/sbin/sshd' >> /root/entrypoint.sh \
-    fi
-# azure Start and enable SSH
-ARG ssh_azure=false
-RUN if [ "$ssh_azure" = true ]; then \
-    echo "root:Docker!" | chpasswd; \
-    fi
-
-EXPOSE 80 443 2222
-
-RUN echo 'exec /usr/bin/v2ray run -c /etc/v2ray/config.json' >> /root/entrypoint.sh
-ENTRYPOINT [ "/root/entrypoint.sh" ]
+    && ssh-keygen -A 
+RUN sed -i '$i\/usr/sbin/sshd' /root/entrypoint.sh
+# azure ssh
+RUN echo "root:Docker!" | chpasswd
