@@ -2,7 +2,7 @@ FROM v2fly/v2fly-core as v2ray
 ENV TZ=Asia/Shanghai
 COPY v2ray /etc/v2ray
 RUN rm /var/log/v2ray/*
-COPY --chmod=+x entrypoint.sh entrypoint.sh
+COPY --chmod=555 entrypoint.sh entrypoint.sh
 EXPOSE 10000
 ENTRYPOINT [ "/root/entrypoint.sh" ]
 
