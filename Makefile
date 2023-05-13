@@ -13,11 +13,11 @@ all: azure caddy nginx
 
 # 构建 by azure 
 azure: 
-	docker build --build-arg ssh_azure=true -t liuxingjun/v2ray:azure .
+	docker build ---target azure -t liuxingjun/v2ray:azure .
 
 # by caddy
 caddy:
-	docker build --build-arg caddy=true -t liuxingjun/v2ray:caddy .
+	docker build ---target caddy -t liuxingjun/v2ray:caddy .
 
 nginx:
-	docker build --build-arg nginx=true -t liuxingjun/v2ray:nginx .
+	docker build --target nginx -t liuxingjun/v2ray:nginx .
