@@ -2,14 +2,13 @@
 # https://learn.microsoft.com/zh-cn/azure/container-apps/azure-resource-manager-api-spec?tabs=yaml#container-app-examples
 
 kind: containerapp
-location: Southeast Asia
+location: southeastasia
 name: wss
 resourceGroup: aci
 type: Microsoft.App/containerApps
 tags:
   tagname: value
 properties:
-  managedEnvironmentId: /subscriptions/4ccb392b-97cc-4750-9346-a8c2ae0c4f33/resourceGroups/aci/providers/Microsoft.App/managedEnvironments/managedEnvironment-aci-86a4
   configuration:
     activeRevisionsMode: Single
     ingress:
