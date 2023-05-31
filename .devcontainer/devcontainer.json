@@ -8,6 +8,13 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
+        "codespaces": {
+            "repositories": {
+                "liuxingjun/dotfiles": {
+                    "permissions": "write-all"
+                }
+            }
+        },
         "vscode": {
             "extensions": [
                 "eamodio.gitlens"
